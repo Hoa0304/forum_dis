@@ -1,1 +1,1 @@
-FROM bitnami/discourse:latest
+FROM bitnami/discourse:3
