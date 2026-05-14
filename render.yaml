@@ -1,0 +1,50 @@
+services:
+  - type: web
+    name: discourse-forum
+    env: docker
+    plan: starter
+    region: singapore
+    dockerContext: .
+    disk:
+      name: discourse-data
+      mountPath: /bitnami/discourse
+      sizeGB: 10
+    envVars:
+      - key: DISCOURSE_DATABASE_HOST
+        fromDatabase:
+          name: discourse-db
+          property: host
+      - key: DISCOURSE_DATABASE_PASSWORD
+        fromDatabase:
+          name: discourse-db
+          property: password
+      - key: DISCOURSE_DATABASE_USER
+        fromDatabase:
+          name: discourse-db
+          property: user
+      - key: DISCOURSE_DATABASE_NAME
+        fromDatabase:
+          name: discourse-db
+          property: database
+      - key: DISCOURSE_REDIS_HOST
+        fromService:
+          type: redis
+          name: discourse-redis
+          property: host
+      - key: DISCOURSE_USERNAME
+        value: admin
+      - key: DISCOURSE_PASSWORD
+        value: Admin123456
+      - key: DISCOURSE_EMAIL
+        value: admin@example.com
+
+  - type: redis
+    name: discourse-redis
+    plan: free
+    region: singapore
+    ipAllowList: []
+
+databases:
+  - name: discourse-db
+    plan: free
+    region: singapore
