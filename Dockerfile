@@ -1,1 +1,1 @@
-FROM discourse/base:2.0.20231218-0043
+FROM bitnami/discourse:3
